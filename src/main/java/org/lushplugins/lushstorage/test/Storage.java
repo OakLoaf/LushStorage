@@ -1,4 +1,4 @@
-package org.lushplugins.lushstorage;
+package org.lushplugins.lushstorage.test;
 
 import org.lushplugins.lushstorage.annotation.StorageClass;
 import org.lushplugins.lushstorage.annotation.StorageMethod;
