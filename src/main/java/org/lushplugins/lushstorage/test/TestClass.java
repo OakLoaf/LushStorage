@@ -12,7 +12,7 @@ public class TestClass {
 //        manager.loadUser(UUID.randomUUID());
     }
 
-    @StorageMethod
+    @StorageMethod(storageClassName = "org.lushplugins.lushstorage.StorageManager")
     public String testMethod(UUID uuid) {
         return "";
     }

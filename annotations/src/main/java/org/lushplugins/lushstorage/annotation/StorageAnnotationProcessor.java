@@ -1,11 +1,7 @@
 package org.lushplugins.lushstorage.annotation;
 
 import com.google.auto.service.AutoService;
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtMethod;
-import javassist.NotFoundException;
-import org.lushplugins.lushstorage.StorageManager;
+import javassist.*;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -32,6 +28,7 @@ public class StorageAnnotationProcessor extends AbstractProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
+//        return Set.of("*");
         return Set.of("org.lushplugins.lushstorage.annotation.StorageMethod");
     }
 
@@ -43,14 +40,15 @@ public class StorageAnnotationProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "Storage annotation processor is running!");
-        System.out.println("Storage annotation processor is running!");
 
         for (Element element : roundEnv.getElementsAnnotatedWith(StorageMethod.class)) {
             ExecutableElement methodElement = (ExecutableElement) element;
+            StorageMethod annotation = methodElement.getAnnotation(StorageMethod.class);
+
             String methodName = methodElement.getSimpleName().toString();
             String returnType = methodElement.getReturnType().toString();
             String parameters = methodElement.getParameters().toString();
-            String storageClassName = StorageManager.class.getCanonicalName();
+            String storageClassName = annotation.storageClassName();
 
             System.out.println("Processing method: " + methodName + " in class: " + storageClassName);
 
